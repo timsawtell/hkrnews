@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "SwiftUI-RowDucks",
+        "repositoryURL": "https://github.com/timsawtell/swiftui-rowducks.git",
+        "state": {
+          "branch": null,
+          "revision": "5567c01eaf3359b0b5187671a4a82ae3a0070396",
+          "version": "0.0.4"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
