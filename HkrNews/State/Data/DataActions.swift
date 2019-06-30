@@ -17,8 +17,10 @@ struct GetTopStoriesAction : AsyncAction {
             guard let ids = ids else {
                 return
             }
-            store.dispatch(action: RecieveTopStoriesAction(items: ids))
-            store.dispatch(asyncAction: GetDetailsForStories())
+            DispatchQueue.main.async {
+                store.dispatch(action: RecieveTopStoriesAction(items: ids))
+                store.dispatch(asyncAction: GetDetailsForStories())
+            }
         }
     }
 }
@@ -37,7 +39,9 @@ struct GetDetailsForStories : AsyncAction {
         filteredIds?.forEach({ (arg: (key: String, value: Item)) in
             HkrNewsAPI.shared.getItem(itemId: arg.key) { (response: Any?, error: Error?) in
                 if let anItem = response {
-                    store.dispatch(action: ReceiveItemAction(item: anItem))
+                    DispatchQueue.main.async {
+                        store.dispatch(action: ReceiveItemAction(item: anItem))
+                    }
                 }
             }
         })
