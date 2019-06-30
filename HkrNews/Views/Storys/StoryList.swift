@@ -13,9 +13,17 @@ struct StoryList : View {
     
     @ObjectBinding var provider = StoryListViewModelMapper()
     
+    init() {
+        provider.store.dispatch(asyncAction: GetTopStoriesAction())
+    }
+    
     var body: some View {
-        List(provider.viewModel.stories.identified(by: \.id)) { story in
-            StoryCell(item: story)
+        NavigationView {
+            List(provider.viewModel.stories.identified(by: \.id)) { story in
+                NavigationButton(destination: StoryView()) {
+                    StoryCell(item: story)
+                }
+            }.navigationBarTitle(Text("HkrNews"))
         }
     }
 }
@@ -69,7 +77,7 @@ extension StoryListViewModelMapper: Subscriber {
             return (item.isLoaded ?? false)
         }) ?? []
         viewModel = StoryListViewModel(stories: items)
-        if previousViewModel != viewModel {
+        if previousViewModel != viewModel && viewModel.stories.count > 17 {
             didChange.send(viewModel)
         }
     }
